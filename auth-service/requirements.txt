@@ -1,0 +1,5 @@
+# auth_service/requirements.txt
+Flask
+Werkzeug
+flask-cors
+

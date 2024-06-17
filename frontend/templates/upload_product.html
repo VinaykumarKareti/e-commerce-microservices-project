@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Product</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .dashboard {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .dashboard h2 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type=text], input[type=number], input[type=file] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input[type=submit] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        input[type=submit]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <h2>CampusCart</h2>
+        <div class="menu">
+            <a href="/cart">cart</a>
+            <a href="#"><i class="fas fa-info-circle"></i>About Us</a>
+            <a href="/order"><i class="fas fa-clipboard-list"></i>Orders</a>
+            <a href="/profile"><i class="fas fa-user"></i>Profile</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Upload Product</h1>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="product_id">Product ID:</label><br>
+            <input type="text" id="product_id" name="product_id" required><br><br>
+
+            <label for="product_name">Product Name:</label><br>
+            <input type="text" id="product_name" name="product_name" required><br><br>
+
+            <label for="price">Price:</label><br>
+            <input type="number" id="price" name="price" step="0.01" required><br><br>
+
+            <label for="category">Category:</label><br>
+            <input type="text" id="category" name="category" required><br><br>
+
+            <label for="product_type">Product Type:</label><br>
+            <input type="text" id="product_type" name="product_type" required><br><br>
+
+            <label for="image">Choose an image (Max 1MB):</label><br>
+            <input type="file" id="image" name="image" accept="image/*" required><br><br>
+
+            <input type="submit" value="Upload Product">
+        </form>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            console.log('Sidebar toggle functionality');
+        }
+    </script>
+</body>
+</html>

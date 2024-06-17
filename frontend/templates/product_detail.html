@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .dashboard {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .dashboard h2 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .search-box {
+            flex: 1;
+            margin: 0 20px;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .search-button {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+        .cart {
+            display: flex;
+            align-items: center;
+        }
+        .cart-icon {
+            font-size: 24px;
+            margin-right: 5px;
+        }
+        .cart-button {
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .cart-button:hover {
+            background-color: #218838;
+        }
+        .menu {
+            display: flex;
+        }
+        .menu a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            background-color: #444;
+            transition: background-color 0.3s;
+        }
+        .menu a:hover {
+            background-color: #555;
+        }
+        .menu a i {
+            margin-right: 5px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .product-detail {
+            display: flex;
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+        .product-detail img {
+            max-width: 300px;
+            max-height: 300px;
+            display: block;
+            margin-right: 20px;
+        }
+        .product-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .product-info h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .product-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .product-info .price {
+            font-size: 20px;
+            color: #b12704;
+            margin: 10px 0;
+        }
+        .product-info .category,
+        .product-info .type {
+            font-size: 16px;
+            color: #555;
+            margin: 5px 0;
+        }
+        .product-info .buttons {
+            display: flex;
+            margin-top: 20px;
+        }
+        .product-info .buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+        .product-info .buttons .buy-button {
+            background-color: #ff9900;
+            color: white;
+        }
+        .product-info .buttons .buy-button:hover {
+            background-color: #e68a00;
+        }
+        .product-info .buttons .add-to-cart-button {
+            background-color: #28a745;
+            color: white;
+        }
+        .product-info .buttons .add-to-cart-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <h2>CampusCart</h2>
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="Search for products...">
+            <button class="search-button">Search</button>
+        </div>
+        <div class="cart">
+            <span class="cart-icon">🛒</span>
+            <a href="/cart"><button class="cart-button">Cart</button></a>
+        </div>
+        <div class="menu">
+            <a href="/upload_product"><i class="fas fa-plus"></i>Add Product</a>
+            <a href="#"><i class="fas fa-info-circle"></i>About Us</a>
+            <a href="/order"><i class="fas fa-clipboard-list"></i>Orders</a>
+            <a href="/profile"><i class="fas fa-user"></i>Profile</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="product-detail">
+            {% if product.image %}
+            <img src="data:image/jpeg;base64,{{ product.image }}" alt="Product Image">
+            {% else %}
+            <img src="/static/default_product_image.jpg" alt="Default Image">
+            {% endif %}
+            <div class="product-info">
+                <h2>{{ product.product_name }}</h2>
+                <p class="price">${{ product.price }}</p>
+                <p class="category">Category: {{ product.category }}</p>
+                <p class="type">Type: {{ product.product_type }}</p>
+                <div class="buttons">
+                    <form action="{{ url_for('add_to_order', product_id=product.product_id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="buy-button">Buy Now</button>
+                    </form>
+                    <form action="{{ url_for('add_to_cart', product_id=product.product_id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="add-to-cart-button">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="/logout" style="display: block; text-align: center; margin-top: 20px; color: #333; text-decoration: none;">Logout</a>
+
+    <script>
+        function toggleSidebar() {
+            console.log('Sidebar toggle functionality');
+        }
+    </script>
+</body>
+</html>

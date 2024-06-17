@@ -1,0 +1,6 @@
+# frontend/requirements.txt
+Flask
+requests
+firebase-admin
+pillow
+
